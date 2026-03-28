@@ -1,82 +1,90 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { HashSectionLink } from './HashSectionLink';
-import { COMPANY_LEGAL_NAME, COMPANY_SHORT_NAME, MAPS_QUERY } from '../config/company';
+import { COMPANY_LEGAL_NAME, MAPS_QUERY } from '../config/company';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { pathname } = useLocation();
-  const isHome = pathname === '/';
-  /** Light glass bar on home hero; dark bar after scroll or on inner pages */
-  const lightMode = isHome && !scrolled;
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const goHome = (e) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    const onHome = location.pathname === '/';
+    if (!onHome) {
+      navigate('/');
+    }
+    window.history.replaceState(null, '', '/');
+    const scrollTop = () => window.scrollTo({ top: 0, left: 0, behavior: onHome ? 'smooth' : 'auto' });
+    if (onHome) {
+      scrollTop();
+    } else {
+      setTimeout(scrollTop, 0);
+    }
+  };
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 24);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const linkBase = lightMode
-    ? 'text-xs font-medium uppercase tracking-[0.2em] text-gray-600 transition-colors hover:text-gray-900'
-    : 'text-xs font-mono uppercase tracking-widest text-gray-400 transition-colors hover:text-white';
-
-  const linkActive = lightMode ? 'text-[#007AFF]' : 'text-[#3b82f6]';
+  const navLinks = [
+    { name: 'Home', id: 'home' },
+    { name: 'About', id: 'about' },
+    { name: 'Products', id: 'products' },
+    { name: 'Contact', id: 'contact' },
+  ];
 
   return (
     <nav
-      className={`fixed z-50 w-full transition-all duration-300 ${
-        lightMode
-          ? 'border-b border-black/[0.06] bg-white/75 py-4 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.04)]'
-          : 'border-b border-white/5 bg-[#161a23]/95 py-4 shadow-[0_4px_30px_rgba(0,0,0,0.5)] backdrop-blur-md'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled 
+          ? 'py-3 bg-white/80 backdrop-blur-lg border-b border-black/[0.05] shadow-sm' 
+          : 'py-6 bg-transparent'
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2">
-            <img src="/vikram-logo.svg" alt={COMPANY_LEGAL_NAME} className="h-7 w-7" />
-            <span
-              className={`max-w-[11rem] truncate text-lg font-bold tracking-tight sm:max-w-none md:text-xl ${lightMode ? 'text-gray-900' : 'text-white drop-shadow-sm'}`}
-              title={COMPANY_LEGAL_NAME}
-            >
-              <span className="md:hidden">{COMPANY_SHORT_NAME}</span>
-              <span className="hidden md:inline">{COMPANY_LEGAL_NAME}</span>
-            </span>
+          <Link
+            to="/"
+            onClick={goHome}
+            className="flex items-center group"
+            aria-label={`${COMPANY_LEGAL_NAME} home`}
+          >
+            <img
+              src="/vikram-gps-tracker-logo.png"
+              alt={`${COMPANY_LEGAL_NAME} logo`}
+              className="h-12 w-auto sm:h-14 md:h-[3.75rem] object-contain object-left transition-transform duration-300 group-hover:scale-[1.02]"
+            />
           </Link>
 
-          <div className="hidden items-center gap-8 md:flex lg:gap-10">
-            <HashSectionLink sectionId="home" className={`${linkBase} ${linkActive}`}>
-              Home
-            </HashSectionLink>
-            <HashSectionLink sectionId="about" className={linkBase}>
-              About
-            </HashSectionLink>
-            <HashSectionLink sectionId="products" className={linkBase}>
-              Products
-            </HashSectionLink>
-            <HashSectionLink sectionId="contact" className={linkBase}>
-              Contact
-            </HashSectionLink>
+          <div className="hidden items-center gap-1 md:flex">
+            {navLinks.map((link) => (
+              <HashSectionLink
+                key={link.id}
+                sectionId={link.id}
+                className="px-4 py-2 text-sm font-medium text-black/60 transition-all hover:text-[#991b1b] hover:bg-red-50 rounded-full"
+              >
+                {link.name}
+              </HashSectionLink>
+            ))}
+            
             <a
               href={`https://www.google.com/maps/search/?api=1&query=${MAPS_QUERY}`}
               target="_blank"
               rel="noopener noreferrer"
-              className={
-                lightMode
-                  ? 'text-xs font-medium uppercase tracking-[0.2em] text-emerald-700 transition-colors hover:text-emerald-900'
-                  : 'flex cursor-pointer items-center space-x-1 text-xs font-mono uppercase tracking-widest text-[#25D366] transition-colors hover:text-white'
-              }
+              className="ml-2 px-4 py-2 text-sm font-medium text-black/60 transition-all hover:text-[#991b1b] hover:bg-red-50 rounded-full inline-flex items-center gap-1"
             >
-              <span>Find us</span>
+              Find us <ArrowUpRight size={14} className="opacity-40" />
             </a>
+
             <HashSectionLink
               sectionId="products"
-              className={
-                lightMode
-                  ? 'rounded-full bg-[#007AFF] px-6 py-2.5 text-xs font-semibold uppercase tracking-wider text-white shadow-[0_8px_24px_-4px_rgba(0,122,255,0.45)] transition hover:bg-[#0066DD]'
-                  : 'rounded-full border border-[#145a32] bg-[#0c2f1f] px-6 py-2 text-xs font-mono uppercase tracking-widest text-[#8ce99a] transition-colors hover:bg-[#145a32] hover:text-white'
-              }
+              className="ml-4 rounded-full bg-[#991b1b] px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#801616] hover:scale-105 active:scale-95 shadow-lg shadow-red-900/10 btn-ripple"
             >
               Shop now
             </HashSectionLink>
@@ -86,94 +94,50 @@ const Navbar = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={
-                lightMode
-                  ? 'text-gray-900 transition-colors hover:text-gray-600'
-                  : 'text-white transition-colors hover:text-[#8ce99a]'
-              }
+              className="p-2 text-black transition-colors hover:text-[#991b1b]"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
 
-        {mobileMenuOpen ? (
-          <div
-            className={`mt-4 overflow-hidden rounded-2xl border shadow-2xl md:hidden ${
-              lightMode
-                ? 'border-gray-200/80 bg-white/95 backdrop-blur-xl'
-                : 'border-white/10 bg-[#161a23]/95 backdrop-blur-xl'
-            }`}
-          >
-            <div className="flex flex-col space-y-1 px-3 pb-5 pt-4">
-              <HashSectionLink
-                sectionId="home"
-                onNavigate={() => setMobileMenuOpen(false)}
-                className={`rounded-lg px-3 py-3 text-sm font-medium uppercase tracking-widest ${
-                  lightMode ? 'text-[#007AFF]' : 'text-[#3b82f6]'
-                }`}
-              >
-                Home
-              </HashSectionLink>
-              <HashSectionLink
-                sectionId="about"
-                onNavigate={() => setMobileMenuOpen(false)}
-                className={`rounded-lg px-3 py-3 text-sm font-medium uppercase tracking-widest ${
-                  lightMode
-                    ? 'text-gray-700 hover:bg-gray-100'
-                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
-                }`}
-              >
-                About
-              </HashSectionLink>
-              <HashSectionLink
-                sectionId="products"
-                onNavigate={() => setMobileMenuOpen(false)}
-                className={`rounded-lg px-3 py-3 text-sm font-medium uppercase tracking-widest ${
-                  lightMode
-                    ? 'text-gray-700 hover:bg-gray-100'
-                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
-                }`}
-              >
-                Products
-              </HashSectionLink>
-              <HashSectionLink
-                sectionId="contact"
-                onNavigate={() => setMobileMenuOpen(false)}
-                className={`rounded-lg px-3 py-3 text-sm font-medium uppercase tracking-widest ${
-                  lightMode
-                    ? 'text-gray-700 hover:bg-gray-100'
-                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
-                }`}
-              >
-                Contact
-              </HashSectionLink>
+        {/* Mobile Menu */}
+        <div
+          className={`absolute top-full left-0 right-0 mt-2 px-4 transition-all duration-300 ${
+            mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+          }`}
+        >
+          <div className="overflow-hidden rounded-2xl border border-black/[0.05] bg-white/95 p-4 shadow-xl backdrop-blur-xl">
+            <div className="flex flex-col space-y-1">
+              {navLinks.map((link) => (
+                <HashSectionLink
+                  key={link.id}
+                  sectionId={link.id}
+                  onNavigate={() => setMobileMenuOpen(false)}
+                  className="rounded-lg px-4 py-3 text-base font-medium text-black/70 hover:bg-red-50 hover:text-[#991b1b]"
+                >
+                  {link.name}
+                </HashSectionLink>
+              ))}
               <a
                 href={`https://www.google.com/maps/search/?api=1&query=${MAPS_QUERY}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`rounded-lg px-3 py-3 text-sm font-medium uppercase tracking-widest ${
-                  lightMode ? 'text-emerald-700' : 'text-[#25D366] hover:text-white'
-                }`}
+                className="rounded-lg px-4 py-3 text-base font-medium text-black/70 hover:bg-red-50 hover:text-[#991b1b]"
               >
                 Find us
               </a>
               <HashSectionLink
                 sectionId="products"
                 onNavigate={() => setMobileMenuOpen(false)}
-                className={`mt-3 block w-full rounded-xl py-3 text-center text-sm font-semibold uppercase tracking-widest ${
-                  lightMode
-                    ? 'bg-[#007AFF] text-white shadow-md'
-                    : 'border border-[#145a32] bg-[#0c2f1f] text-[#8ce99a]'
-                }`}
+                className="mt-4 block w-full rounded-xl bg-[#991b1b] py-4 text-center text-base font-semibold text-white"
               >
                 Shop now
               </HashSectionLink>
             </div>
           </div>
-        ) : null}
+        </div>
       </div>
     </nav>
   );

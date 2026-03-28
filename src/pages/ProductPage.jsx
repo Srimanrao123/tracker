@@ -2,13 +2,14 @@ import React, { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { HashSectionLink } from '../components/HashSectionLink';
 import { whatsappUrl } from '../config/company';
-import { Battery, Droplets, Radio } from 'lucide-react';
+import { Battery, Droplets, Radio, ArrowLeft, MessageCircle } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ProductImageCarousel from '../components/ProductImageCarousel';
 import { useProducts } from '../hooks/useProducts';
 import { getProductImages } from '../lib/productImages';
 import { formatInr, getPricing } from '../lib/productPricing';
+import { motion as Motion } from 'framer-motion';
 
 const categoryLabel = (name) => {
   const n = String(name).toLowerCase();
@@ -24,52 +25,27 @@ const specRows = [
 ];
 
 function ProductPriceBlock({ product }) {
-  const { price, salePrice, onSale, showQuote } = getPricing(product);
-
-  const saleLabel =
-    showQuote
-      ? '—'
-      : onSale
-        ? formatInr(salePrice)
-        : price === 0 && salePrice > 0
-          ? formatInr(salePrice)
-          : '—';
+  const { price, onSale, effective, showQuote } = getPricing(product);
 
   if (showQuote) {
     return (
-      <div className="rounded-2xl border border-stone-200 bg-white/80 px-5 py-4">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">Price</p>
-            <p className="mt-1 text-2xl font-bold text-stone-400">—</p>
-          </div>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-800">Sale price</p>
-            <p className="mt-1 text-2xl font-bold text-stone-400">—</p>
-          </div>
-        </div>
-        <p className="mt-3 text-sm font-medium text-stone-600">Price on request — message us for a quote.</p>
+      <div className="flex flex-col">
+        <span className="text-sm font-bold text-[#991b1b]/40 uppercase tracking-[0.2em] mb-2">Request Quote</span>
+        <p className="text-4xl font-black text-black tracking-tight">Price on Request</p>
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-stone-200 bg-white/80 px-5 py-4">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">Price</p>
-          <p
-            className={`mt-1 text-2xl font-bold tabular-nums text-stone-900 ${
-              onSale ? 'text-xl line-through opacity-50 decoration-stone-400' : ''
-            }`}
-          >
-            {price > 0 ? formatInr(price) : '—'}
-          </p>
-        </div>
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-emerald-800">Sale price</p>
-          <p className="mt-1 text-2xl font-bold tabular-nums text-stone-900">{saleLabel}</p>
-        </div>
+    <div className="flex flex-col">
+      <span className="text-sm font-bold text-[#991b1b]/40 uppercase tracking-[0.2em] mb-2">
+        {onSale ? 'Special Premium Offer' : 'Investment'}
+      </span>
+      <div className="flex items-end gap-4">
+        <p className="text-5xl font-black tracking-tighter text-black">{formatInr(effective)}</p>
+        {onSale && (
+          <p className="text-xl font-bold text-black/20 line-through mb-2 italic">{formatInr(price)}</p>
+        )}
       </div>
     </div>
   );
@@ -91,111 +67,120 @@ export default function ProductPage() {
   );
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [productId]);
 
   return (
-    <div className="min-h-screen bg-[#ECECEA]">
+    <div className="min-h-screen bg-white selection:bg-red-100 selection:text-[#991b1b]">
       <Navbar />
-      <main className="pt-24 pb-20">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <main className="pt-40 pb-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <HashSectionLink
             sectionId="products"
-            className="mb-6 inline-flex text-sm font-medium text-stone-600 underline-offset-4 hover:text-stone-900 hover:underline"
+            className="group mb-16 inline-flex items-center gap-3 text-xs font-black uppercase tracking-[0.2em] text-black/40 hover:text-[#991b1b] transition-colors"
           >
-            ← All products
+            <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-2" />
+            Back to Hardware Fleet
           </HashSectionLink>
 
           {loading ? (
-            <p className="text-stone-600">Loading product…</p>
+            <div className="flex flex-col items-center justify-center py-48">
+              <div className="h-16 w-16 rounded-3xl border-4 border-[#991b1b]/5 border-t-[#991b1b] animate-spin mb-8" />
+              <p className="font-bold text-[#991b1b] animate-pulse uppercase tracking-widest text-xs">Initializing Hardware Interface...</p>
+            </div>
           ) : error && !product ? (
-            <p className="text-stone-600">Could not load catalog.</p>
+            <div className="text-center py-48 bg-[#991b1b]/[0.02] rounded-[64px] border border-dashed border-[#991b1b]/[0.1] px-8">
+              <p className="text-3xl font-black text-black mb-4">Transmission Interrupted</p>
+              <p className="text-black/40 font-medium mb-12">We couldn't retrieve the specifications for this unit.</p>
+              <button 
+                onClick={() => window.location.reload()}
+                className="px-10 py-5 bg-[#991b1b] text-white rounded-full font-bold shadow-2xl shadow-red-900/20"
+              >
+                Retry Link
+              </button>
+            </div>
           ) : !product ? (
-            <div className="rounded-3xl border border-stone-200 bg-white/80 p-10 text-center shadow-sm">
-              <p className="text-lg font-medium text-stone-800">Product not found</p>
+            <div className="text-center py-48 bg-black/[0.02] rounded-[64px] border border-dashed border-black/[0.1] px-8">
+              <p className="text-3xl font-black text-black mb-6">Hardware Not Found</p>
               <HashSectionLink
                 sectionId="products"
-                className="mt-4 inline-block text-sm font-semibold text-stone-900 underline"
+                className="px-10 py-5 rounded-full bg-black text-white font-bold inline-block"
               >
-                Return to products
+                Return to catalog
               </HashSectionLink>
             </div>
           ) : (
-            <>
-              <div className="overflow-hidden rounded-[32px] border border-stone-200/90 bg-[#F2F2F2] shadow-[0_24px_60px_-20px_rgba(0,0,0,0.2)]">
-                <div className="px-5 pb-2 pt-8 sm:px-10 sm:pt-10">
-                  <ProductImageCarousel
-                    images={images}
-                    alt={product.name}
-                    variant="page"
-                    intervalMs={5000}
-                    pauseOnHover={false}
-                    dotClassName="pb-4"
-                  />
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32 items-start">
+              {/* Left Column: Images */}
+              <Motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                className="relative aspect-[4/5] rounded-[64px] overflow-hidden bg-gradient-to-br from-[#fcfcfc] to-[#f5f5f5] soft-shadow border border-black/[0.02]"
+              >
+                <ProductImageCarousel
+                  images={images}
+                  alt={product.name}
+                  variant="page"
+                  intervalMs={6000}
+                  pauseOnHover={false}
+                  dotClassName="pb-12"
+                />
+                <div className="absolute inset-0 pointer-events-none bg-[#991b1b]/[0.01]" />
+              </Motion.div>
 
-                <div className="border-t border-stone-200/80 bg-[#FAFAF8] px-6 py-8 sm:px-10 sm:py-10">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
+              {/* Right Column: Content */}
+              <Motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col pt-4"
+              >
+                <div className="mb-12">
+                  <span className="inline-block px-5 py-2 rounded-full bg-[#991b1b]/[0.05] border border-[#991b1b]/[0.1] text-[10px] font-black uppercase tracking-[0.4em] text-[#991b1b] mb-8">
                     {categoryLabel(product.name)}
-                  </p>
-                  <h1 className="mt-2 font-serif text-3xl font-bold leading-tight tracking-tight text-stone-900 sm:text-4xl">
+                  </span>
+                  <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-black mb-10 leading-[1] selection:bg-[#991b1b] selection:text-white">
                     {product.name}
                   </h1>
-                  <p className="mt-6 text-[17px] leading-relaxed text-stone-600">
+                  <p className="text-xl md:text-2xl text-black/40 leading-relaxed font-medium">
                     {product.description}
                   </p>
+                </div>
 
-                  <p className="mt-8 text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
-                    Technical details
-                  </p>
-                  <div className="mt-4 overflow-hidden rounded-2xl border border-stone-200/90 bg-white shadow-sm">
-                    {specRows.map(({ key, label, Icon }, i) => {
-                      const value = product.specs?.[key] ?? '—';
-                      return (
-                        <div
-                          key={key}
-                          className={`flex gap-4 px-4 py-4 sm:px-5 ${
-                            i > 0 ? 'border-t border-stone-200/80' : ''
-                          }`}
-                        >
-                          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-stone-100 text-stone-600">
-                            <Icon size={20} strokeWidth={1.75} />
-                          </div>
-                          <div className="min-w-0 flex-1 pt-0.5">
-                            <p className="text-[11px] font-medium uppercase tracking-wider text-stone-500">
-                              {label}
-                            </p>
-                            <p className="mt-1 text-[15px] font-medium leading-snug text-stone-900">
-                              {value}
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
+                  {specRows.map(({ key, label, Icon }) => {
+                    const value = product.specs?.[key] ?? '—';
+                    return (
+                      <div key={key} className="p-8 rounded-[40px] bg-[#991b1b]/[0.02] border border-[#991b1b]/[0.05] hover:bg-white hover:soft-shadow transition-all duration-500 group/spec">
+                        <Icon size={24} className="text-[#991b1b]/20 mb-6 group-hover/spec:scale-110 group-hover/spec:text-[#991b1b] transition-all" />
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/30 mb-2">{label}</p>
+                        <p className="text-base font-black text-black">{value}</p>
+                      </div>
+                    );
+                  })}
+                </div>
 
-                  <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <ProductPriceBlock product={product} />
-                    </div>
+                <div className="flex flex-col gap-10 pt-16 border-t border-black/[0.05]">
+                  <ProductPriceBlock product={product} />
+                  
+                  <div className="flex flex-col sm:flex-row gap-4">
                     <a
                       href={whatsappUrl(
                         `Hi, I want to buy the ${product.name}. Please let me know the details.`,
                       )}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center rounded-2xl bg-[#1a1a1a] px-8 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-black"
+                      className="group relative inline-flex items-center justify-center gap-4 rounded-full bg-[#991b1b] px-12 py-6 text-lg font-black text-white transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-red-900/30 w-full overflow-hidden btn-ripple pulse-accent"
                     >
-                      <span
-                        className="mr-2 inline-block h-2 w-2 rounded-full bg-[#25D366]"
-                        aria-hidden
-                      />
-                      Message on WhatsApp
+                      <MessageCircle size={24} className="fill-white" />
+                      <span className="uppercase tracking-[0.1em]">Instant Purchase</span>
+                      <div className="absolute inset-x-0 bottom-0 h-1 bg-white/20 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
                     </a>
                   </div>
                 </div>
-              </div>
-            </>
+              </Motion.div>
+            </div>
           )}
         </div>
       </main>
