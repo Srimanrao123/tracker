@@ -1,0 +1,3 @@
+id,name,description,price,salePrice,images,battery,waterproof,range
+1,"Example — one photo","Single image: one URL in images.",9999,,/products/crop-01-personal-kit.png,Rechargeable,—,4G India
+2,"Example — carousel","Multiple images: comma-separated (auto-rotating carousel).",12999,11999,"/products/crop-03-dual-4g.png,/products/dual-channel-dashcams.png",12V vehicle,Dashcam unit,4G LTE

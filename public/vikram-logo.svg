@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+  <!-- Simple GPS pin — reads on light & dark nav/footer -->
+  <path
+    fill="#007AFF"
+    d="M24 3C15.16 3 8 10.16 8 19c0 10.25 16 26 16 26s16-15.75 16-26C40 10.16 32.84 3 24 3Z"
+  />
+  <circle cx="24" cy="19" r="6.5" fill="#fff" />
+  <circle cx="24" cy="19" r="3" fill="#007AFF" />
+</svg>

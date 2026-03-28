@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@500;600;700&family=Roboto+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  section[id] {
+    scroll-margin-top: 92px;
+  }
+
+  body {
+    @apply bg-[#08121a] text-gray-100 antialiased overflow-x-hidden;
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+.font-serif {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.text-offset-shadow {
+  text-shadow: 
+    3px 0 0 rgba(0, 150, 255, 0.7),
+    -3px 0 0 rgba(255, 100, 100, 0.7);
+}
+
+.text-offset-shadow-light {
+  text-shadow: 
+    2px 0 0 rgba(0, 150, 255, 0.5),
+    -2px 0 0 rgba(255, 100, 100, 0.5);
+}
+
+.font-mono {
+  font-family: 'Roboto Mono', monospace;
+}
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

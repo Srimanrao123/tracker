@@ -1,0 +1,6 @@
+# Netlify: proxy same-origin path to Google Sheet CSV (avoids browser CORS).
+# IMPORTANT: Keep SHEET_ID and gid in sync with .env (VITE_PRODUCTS_SHEET_ID, VITE_PRODUCTS_SHEET_GID).
+/google-sheet-export https://docs.google.com/spreadsheets/d/15qJiWWGd70_yp4oGqP6zuf3fghMi5alWI3zKK4Vp8rE/export?format=csv&gid=0 200
+
+# SPA fallback
+/*    /index.html   200
