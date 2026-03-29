@@ -50,7 +50,7 @@ const ProductImageCarouselInner = ({
       onMouseLeave={() => pauseOnHover && setPaused(false)}
     >
       <div
-        className={`relative w-full overflow-hidden rounded-2xl bg-gradient-to-b from-black/[0.04] to-black/[0.02] ring-1 ring-black/[0.06] ${frameClass}`}
+        className={`relative w-full overflow-hidden ${frameClass}`}
       >
         <div
           className="flex h-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] will-change-transform"
@@ -68,7 +68,7 @@ const ProductImageCarouselInner = ({
               <img
                 src={src}
                 alt={i === 0 ? alt : ''}
-                className="max-h-full max-w-full object-contain p-4 sm:p-5"
+                className="max-h-full max-w-full object-contain"
                 loading={i === 0 ? 'eager' : 'lazy'}
                 decoding="async"
                 referrerPolicy="no-referrer"

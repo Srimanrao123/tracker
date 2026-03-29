@@ -12,6 +12,9 @@ import Footer from '../components/Footer';
 import IntroAnimation from '../components/IntroAnimation';
 import { AnimatePresence, motion as Motion, useScroll, useTransform } from 'framer-motion';
 
+// Global flag to track if intro has played once in this browser session
+let introHasPlayed = false;
+
 const GlobalTrackingBackground = () => {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
@@ -73,7 +76,12 @@ const GlobalTrackingBackground = () => {
 
 export default function Home() {
   const location = useLocation();
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(!introHasPlayed);
+
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+    introHasPlayed = true;
+  };
 
   useLayoutEffect(() => {
     if (showIntro || location.pathname !== '/') return;
@@ -88,7 +96,7 @@ export default function Home() {
     <>
       <AnimatePresence>
         {showIntro && (
-          <IntroAnimation onComplete={() => setShowIntro(false)} />
+          <IntroAnimation onComplete={handleIntroComplete} />
         )}
       </AnimatePresence>
 

@@ -26,7 +26,7 @@ const ProductCard = ({ product, index = 0 }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
-      className="group relative flex cursor-pointer flex-col overflow-hidden rounded-[32px] bg-white border border-black/[0.02] soft-shadow transition-all duration-500 hover:border-[#991b1b]/10 hover:shadow-[0_24px_48px_-8px_rgba(153,27,27,0.06)] hover:-translate-y-1.5"
+      className="group relative flex cursor-pointer flex-col transition-all duration-500 hover:-translate-y-2"
       onClick={openProduct}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -48,61 +48,47 @@ const ProductCard = ({ product, index = 0 }) => {
         </div>
       )}
 
-      {/* Image Section */}
-      <div className="relative w-full aspect-[1/1] overflow-hidden bg-[#fcfcfc]">
-        <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
+      {/* Image Section - Main Visual */}
+      <div className="relative w-full aspect-square overflow-hidden bg-white rounded-[48px] mb-8 transition-colors duration-500 group-hover:bg-[#fcfcfc]">
+        <div className="absolute inset-0 p-2 transition-transform duration-700 group-hover:scale-110 ease-out">
           <ProductImageCarousel
             images={images}
             alt={product.name}
             variant="card"
             intervalMs={4800}
             pauseOnHover={true}
+            showDots={false}
           />
         </div>
-        <div className="absolute inset-0 bg-[#991b1b]/[0.01] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-[#991b1b]/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
-      {/* Content Section */}
-      <div className="flex flex-col p-6 pt-5">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#991b1b]">
-            {categoryLabel(product.name)}
-          </span>
-          {!showQuote && onSale && (
-            <span className="text-[9px] font-bold text-[#991b1b] bg-red-50 px-1.5 py-0.5 rounded-md italic">
-              SAVE {Math.round(((price - salePrice) / price) * 100)}%
-            </span>
-          )}
-        </div>
-        
-        <h3 className="text-lg font-black tracking-tight text-black mb-1.5 group-hover:text-[#991b1b] transition-colors duration-300 line-clamp-1 leading-tight">
+      {/* Content Section - Center Aligned */}
+      <div className="flex flex-col items-center text-center px-4">
+        <h3 className="text-xl font-black tracking-tight text-black mb-1.5 transition-colors duration-300 line-clamp-1 leading-tight">
           {product.name}
         </h3>
 
-        <p className="text-[11px] leading-relaxed text-black/30 mb-5 line-clamp-2 h-8 font-medium">
-          {product.description}
-        </p>
-
-        <div className="flex items-center justify-between mt-auto pt-4 border-t border-black/[0.02]">
-          <div className="flex flex-col">
-            {showQuote ? (
-              <span className="text-[11px] font-black text-black/40 uppercase tracking-[0.05em]">Quote-Only</span>
-            ) : (
-              <div className="flex items-baseline gap-2">
-                <span className="text-xl font-black tracking-tighter text-black group-hover:text-[#991b1b] transition-colors">
-                  {formatInr(effective)}
+        <div className="flex items-center gap-2 mb-3">
+          {showQuote ? (
+            <span className="text-[11px] font-black text-black/40 uppercase tracking-[0.1em]">Enquiry Only</span>
+          ) : (
+            <div className="flex items-baseline gap-2">
+              <span className="text-lg font-black tracking-tighter text-black">
+                {formatInr(effective)}
+              </span>
+              {onSale && (
+                <span className="text-[10px] font-bold text-black/20 line-through tracking-tight">
+                  {formatInr(price)}
                 </span>
-                {onSale && (
-                  <span className="text-[10px] font-bold text-black/10 line-through tracking-tight">
-                    {formatInr(price)}
-                  </span>
-                )}
-              </div>
-            )}
-          </div>
-          
-          <ArrowRight size={16} className="text-[#991b1b]/20 group-hover:text-[#991b1b] group-hover:translate-x-1 transition-all" />
+              )}
+            </div>
+          )}
         </div>
+
+        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#991b1b]/40 group-hover:text-[#991b1b] transition-all duration-300 flex items-center gap-2">
+          View Details <ArrowRight size={10} strokeWidth={3} className="translate-y-[0.5px]" />
+        </span>
       </div>
     </Motion.div>
   );

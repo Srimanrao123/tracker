@@ -4,18 +4,13 @@ import { useProducts } from '../hooks/useProducts';
 import { motion as Motion } from 'framer-motion';
 
 const SkeletonCard = () => (
-  <div className="flex flex-col overflow-hidden rounded-[32px] bg-white border border-black/[0.01] p-6 h-[380px] soft-shadow animate-pulse">
-    <div className="w-full aspect-square rounded-[20px] bg-black/[0.02] mb-6 overflow-hidden relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 translate-x-[-100%] animate-[shimmer_2s_infinite]" />
+  <div className="flex flex-col items-center animate-pulse">
+    <div className="w-full aspect-square rounded-[48px] bg-white border border-black/[0.01] mb-8 overflow-hidden relative">
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/[0.02] to-transparent skew-x-12 translate-x-[-100%] animate-[shimmer_2s_infinite]" />
     </div>
-    <div className="h-1.5 w-12 bg-black/[0.02] rounded-full mb-3" />
-    <div className="h-6 w-3/4 bg-black/[0.02] rounded-lg mb-3" />
-    <div className="h-2.5 w-full bg-black/[0.02] rounded-md mb-2" />
-    <div className="h-2.5 w-2/3 bg-black/[0.02] rounded-md mb-8" />
-    <div className="flex items-center justify-between mt-auto pt-4 border-t border-black/[0.01]">
-      <div className="h-6 w-20 bg-black/[0.02] rounded-md" />
-      <div className="h-4 w-4 rounded-full bg-black/[0.02]" />
-    </div>
+    <div className="h-6 w-3/4 bg-black/[0.03] rounded-lg mb-3" />
+    <div className="h-4 w-1/2 bg-black/[0.03] rounded-md mb-4" />
+    <div className="h-3 w-20 bg-black/[0.03] rounded-full" />
   </div>
 );
 
