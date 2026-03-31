@@ -139,7 +139,7 @@ const ContactSection = () => {
                     <p className="text-[9px] font-bold text-black/30 uppercase mt-1">Mon — Sun</p>
                  </div>
                </div>
-               <p className="text-2xl font-black text-black tracking-tighter">06:00 AM — 11:00 PM</p>
+               <p className="text-2xl font-black text-black tracking-tighter">10:00 AM — 10:00 PM</p>
             </Motion.div>
           </div>
         </div>
