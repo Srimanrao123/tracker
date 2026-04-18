@@ -26,10 +26,15 @@ export const ADDRESS_FULL = `${ADDRESS_LINE_1}, ${ADDRESS_LINE_2}`;
 export const MAPS_QUERY =
   'H.No+3-135/7+Mallapur+Balapur+Ranga+Reddy+500005';
 
+/** Certified ecosystem block — always show with platform chips. */
+export const SOFTWARE_SECTION_TITLE = 'Software applications';
+export const SOFTWARE_SECTION_SUBTITLE = 'For mobiles & WebLinks';
+
 export const SOFTWARE_PLATFORMS = [
-  'Tracksolid India',
-  'SparkGPS / Track360',
+  'TrackSolid india / TB TRACK',
+  'SparkGps / Track360',
   'BOLT GPS',
+  'Tracky GPS / Vikram GPS',
 ];
 
 export function whatsappUrl(text) {

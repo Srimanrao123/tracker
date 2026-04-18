@@ -6,6 +6,8 @@ import {
   MANAGING_DIRECTOR,
   SERVICE_HEADLINE,
   SOFTWARE_PLATFORMS,
+  SOFTWARE_SECTION_SUBTITLE,
+  SOFTWARE_SECTION_TITLE,
   TAGLINE,
 } from '../config/company';
 import { motion as Motion } from 'framer-motion';
@@ -91,7 +93,10 @@ const AboutSection = () => {
               </div>
 
               <div className="space-y-10">
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-black/20 pb-6 border-b border-black/[0.05]">Certified Ecosystems</p>
+                <div className="pb-6 border-b border-black/[0.05]">
+                  <p className="text-[10px] font-black uppercase tracking-[0.3em] text-black/20 mb-2">{SOFTWARE_SECTION_TITLE}</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#991b1b]/50">{SOFTWARE_SECTION_SUBTITLE}</p>
+                </div>
                 <div className="flex flex-wrap gap-3">
                   {SOFTWARE_PLATFORMS.map((platform, i) => (
                     <div key={i} className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-[#991b1b]/[0.03] border border-[#991b1b]/[0.05] text-[13px] font-black text-[#991b1b] hover:bg-[#991b1b] hover:text-white transition-all duration-300">
