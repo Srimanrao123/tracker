@@ -14,10 +14,13 @@ import { motion as Motion } from 'framer-motion';
 
 const ContactSection = () => {
   return (
-    <section className="relative py-32 sm:py-48 bg-white" id="contact">
+    <section className="relative mt-16 sm:mt-24 pb-32 sm:pb-48 bg-white">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-black/[0.05] to-transparent" />
       
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div
+        id="contact"
+        className="scroll-mt-20 sm:scroll-mt-24 relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+      >
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-24">
           <div className="max-w-2xl">
             <Motion.div

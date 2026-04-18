@@ -14,12 +14,15 @@ import { motion as Motion } from 'framer-motion';
 
 const AboutSection = () => {
   return (
-    <section className="relative bg-[#fcfcfc] py-32 sm:py-48 overflow-hidden" id="about">
+    <section className="relative mt-16 sm:mt-24 bg-[#fcfcfc] pb-32 sm:pb-48 overflow-hidden">
       {/* Background purely for aesthetic */}
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[800px] h-[800px] bg-[#991b1b]/[0.02] rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#991b1b]/[0.01] rounded-full blur-[120px] pointer-events-none" />
       
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div
+        id="about"
+        className="scroll-mt-20 sm:scroll-mt-24 relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 lg:gap-32 items-center">
           <div className="relative z-20">
             <Motion.div

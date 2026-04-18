@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
@@ -10,6 +10,7 @@ import TransformSection from '../components/TransformSection';
 import RedefineSection from '../components/RedefineSection';
 import Footer from '../components/Footer';
 import IntroAnimation from '../components/IntroAnimation';
+import { scrollToSectionId } from '../lib/scrollToSection';
 import { AnimatePresence, motion as Motion, useScroll, useTransform } from 'framer-motion';
 
 // Global flag to track if intro has played once in this browser session
@@ -86,9 +87,12 @@ export default function Home() {
   useLayoutEffect(() => {
     if (showIntro || location.pathname !== '/') return;
     const id = location.hash?.replace(/^#/, '').trim();
-    if (!id) return;
+    if (!id) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      return;
+    }
     requestAnimationFrame(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      scrollToSectionId(id, { behavior: 'smooth' });
     });
   }, [location.pathname, location.hash, showIntro]);
 

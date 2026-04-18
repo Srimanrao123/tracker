@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { HashSectionLink } from './HashSectionLink';
 import { COMPANY_LEGAL_NAME, MAPS_QUERY } from '../config/company';
+import { scrollToSectionId } from '../lib/scrollToSection';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -13,17 +14,12 @@ const Navbar = () => {
   const goHome = (e) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    const onHome = location.pathname === '/';
-    if (!onHome) {
+    if (location.pathname !== '/') {
       navigate('/');
+      return;
     }
-    window.history.replaceState(null, '', '/');
-    const scrollTop = () => window.scrollTo({ top: 0, left: 0, behavior: onHome ? 'smooth' : 'auto' });
-    if (onHome) {
-      scrollTop();
-    } else {
-      setTimeout(scrollTop, 0);
-    }
+    navigate('/', { replace: true });
+    scrollToSectionId('home', { behavior: 'smooth' });
   };
 
   useEffect(() => {

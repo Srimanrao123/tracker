@@ -1,4 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { scrollToSectionId } from '../lib/scrollToSection';
 
 /**
  * Scroll to a section on the home page. React Router often does not scroll when
@@ -13,11 +14,8 @@ export function HashSectionLink({ sectionId, children, className, onNavigate, ..
 
     if (location.pathname === '/') {
       e.preventDefault();
-      const el = document.getElementById(sectionId);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-      window.history.replaceState(null, '', `/#${sectionId}`);
+      scrollToSectionId(sectionId);
+      navigate({ pathname: '/', hash: sectionId }, { replace: true });
       return;
     }
 

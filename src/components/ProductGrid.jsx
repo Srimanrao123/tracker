@@ -18,10 +18,13 @@ const ProductGrid = () => {
   const { products, loading, error } = useProducts();
 
   return (
-    <section className="relative bg-white py-24 sm:py-32" id="products">
+    <section className="relative mt-8 sm:mt-12 bg-white pb-24 sm:pb-32">
       <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#fcfcfc] to-transparent pointer-events-none" />
       
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div
+        id="products"
+        className="scroll-mt-20 sm:scroll-mt-24 relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+      >
         <div className="mb-20">
           <Motion.div
             initial={{ opacity: 0, x: -10 }}

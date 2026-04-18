@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { HashSectionLink } from '../components/HashSectionLink';
 import { whatsappUrl } from '../config/company';
@@ -55,10 +55,6 @@ export default function ProductPage() {
 
   const images = useMemo(() => (product ? getProductImages(product) : []), [product]);
   const { price, onSale, effective, showQuote } = product ? getPricing(product) : {};
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [productId]);
 
   if (loading) {
     return (
