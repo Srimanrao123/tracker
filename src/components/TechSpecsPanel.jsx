@@ -99,7 +99,7 @@ const TechSpecsPanel = ({ product, onClose }) => {
                 Technical details
               </p>
               <div className="overflow-hidden rounded-2xl border border-stone-200/90 bg-white/70 shadow-sm">
-                {specRows.map(({ key, label, Icon }, i) => {
+                {specRows.map(({ key, label, Icon: SpecIcon }, i) => {
                   const value = product.specs?.[key] ?? '—';
                   return (
                     <div
@@ -109,7 +109,7 @@ const TechSpecsPanel = ({ product, onClose }) => {
                       }`}
                     >
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-stone-100 text-stone-600">
-                        <Icon size={20} strokeWidth={1.75} />
+                        <SpecIcon size={20} strokeWidth={1.75} />
                       </div>
                       <div className="min-w-0 flex-1 pt-0.5">
                         <p className="text-[11px] font-medium uppercase tracking-wider text-stone-500">

@@ -16,6 +16,14 @@ import { AnimatePresence, motion as Motion, useScroll, useTransform } from 'fram
 // Global flag to track if intro has played once in this browser session
 let introHasPlayed = false;
 
+const SIGNAL_PARTICLES = [
+  { initialX: '12%', initialY: '18%', x: '14%', y: '16%' },
+  { initialX: '68%', initialY: '22%', x: '66%', y: '24%' },
+  { initialX: '42%', initialY: '55%', x: '44%', y: '53%' },
+  { initialX: '85%', initialY: '72%', x: '83%', y: '74%' },
+  { initialX: '28%', initialY: '80%', x: '30%', y: '78%' },
+];
+
 const GlobalTrackingBackground = () => {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
@@ -53,15 +61,15 @@ const GlobalTrackingBackground = () => {
 
       {/* Floating Signal Packets */}
       <Motion.div style={{ y }} className="absolute inset-0">
-        {[...Array(5)].map((_, i) => (
+        {SIGNAL_PARTICLES.map((particle, i) => (
           <Motion.div
             key={i}
-            initial={{ x: Math.random() * 100 + "%", y: Math.random() * 100 + "%", opacity: 0 }}
-            animate={{ 
+            initial={{ x: particle.initialX, y: particle.initialY, opacity: 0 }}
+            animate={{
               opacity: [0, 0.2, 0],
               scale: [1, 1.5, 1],
-              x: (Math.random() * 10 - 5) + "%",
-              y: (Math.random() * 10 - 5) + "%"
+              x: particle.x,
+              y: particle.y,
             }}
             transition={{ duration: 10 + i * 2, repeat: Infinity }}
             className="absolute h-1 w-1 rounded-full bg-[#991b1b] blur-[1px]"

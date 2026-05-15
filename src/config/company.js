@@ -10,6 +10,7 @@ export const SERVICE_HEADLINE = 'GPS sales, service & solutions';
 export const TAGLINE = 'Live tracking for all your assets';
 export const MANAGING_DIRECTOR = 'Yatham Ramulu, M.Sc. MBA';
 export const DIRECTOR_ROLE = 'Proprietor & Managing Director';
+export const MANAGING_DIRECTOR_IMAGE = '/managing-director.png?v=2';
 
 export const PHONE_DISPLAY_PRIMARY = '97011 10033';
 export const PHONE_DISPLAY_SECONDARY = '63096 75143';

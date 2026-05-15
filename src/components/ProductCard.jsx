@@ -6,16 +6,9 @@ import ProductImageCarousel from './ProductImageCarousel';
 import { getProductImages } from '../lib/productImages';
 import { formatInr, getPricing } from '../lib/productPricing';
 
-const categoryLabel = (name) => {
-  const n = String(name).toLowerCase();
-  if (n.includes('dash')) return 'Dash';
-  if (n.includes('tracker') || n.includes('gps')) return 'GPS';
-  return 'Unit';
-};
-
 const ProductCard = ({ product, index = 0 }) => {
   const navigate = useNavigate();
-  const { price, salePrice, onSale, effective, showQuote } = getPricing(product);
+  const { price, onSale, effective, showQuote } = getPricing(product);
   const images = getProductImages(product);
 
   const openProduct = () => navigate(`/products/${product.id}`);

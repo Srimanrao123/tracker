@@ -34,10 +34,10 @@ const mainSpecs = [
   { key: 'range', label: 'Signal Range', Icon: Radio, color: 'text-emerald-500' },
 ];
 
-function FeatureChip({ icon: Icon, text }) {
+function FeatureChip({ icon: ChipIcon, text }) {
   return (
     <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/5 hover:bg-black/10 transition-colors cursor-default">
-      <Icon size={14} className="text-[#991b1b]" />
+      <ChipIcon size={14} className="text-[#991b1b]" />
       <span className="text-[10px] font-black uppercase tracking-widest text-black/60">{text}</span>
     </div>
   );
@@ -45,7 +45,7 @@ function FeatureChip({ icon: Icon, text }) {
 
 export default function ProductPage() {
   const { productId } = useParams();
-  const { products, loading, error } = useProducts();
+  const { products, loading } = useProducts();
 
   const product = useMemo(() => {
     const id = Number(productId);
@@ -158,9 +158,9 @@ export default function ProductPage() {
 
                 {/* Primary Specs Grid */}
                 <div className="grid grid-cols-3 gap-4 p-2 rounded-[32px] bg-black/[0.02] mb-12">
-                  {mainSpecs.map(({ key, label, Icon, color }) => (
+                  {mainSpecs.map(({ key, label, Icon: SpecIcon, color }) => (
                     <div key={key} className="flex flex-col items-center justify-center p-6 text-center">
-                      <Icon size={20} className={`${color} mb-3`} />
+                      <SpecIcon size={20} className={`${color} mb-3`} />
                       <span className="text-[8px] font-black uppercase tracking-widest text-black/20 mb-1">{label}</span>
                       <span className="text-xs font-black text-black">{product.specs?.[key] || '—'}</span>
                     </div>

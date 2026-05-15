@@ -96,4 +96,75 @@
       transform: translateX(100%);
     }
   }
+
+  .telemetry-map.leaflet-container,
+  .office-location-map.leaflet-container {
+    background: #e8e8e8;
+    font-family: inherit;
+  }
+
+  .telemetry-map .leaflet-tile-pane {
+    filter: none;
+  }
+
+  .office-map-pin {
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .office-map-pin__dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 9999px;
+    background: #991b1b;
+    border: 2px solid white;
+    box-shadow: 0 2px 8px rgba(153, 27, 27, 0.45);
+  }
+
+  .telemetry-map-marker {
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .telemetry-map-marker__ping {
+    position: absolute;
+    inset: -20px;
+    border-radius: 9999px;
+    background: rgba(153, 27, 27, 0.2);
+    animation: telemetry-marker-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes telemetry-marker-ping {
+    75%,
+    100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+
+  .telemetry-map-marker__shell {
+    position: relative;
+    z-index: 1;
+    width: 56px;
+    height: 56px;
+    border-radius: 9999px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid rgba(153, 27, 27, 0.2);
+    box-shadow: 0 0 50px rgba(153, 27, 27, 0.5);
+  }
+
+  .telemetry-map-marker__core {
+    width: 16px;
+    height: 16px;
+    border-radius: 9999px;
+    background: #991b1b;
+    box-shadow: 0 0 20px #991b1b;
+  }
+
+  .director-portrait {
+    image-rendering: auto;
+  }
 }
