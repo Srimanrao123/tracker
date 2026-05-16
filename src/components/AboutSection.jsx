@@ -112,24 +112,20 @@ const AboutSection = () => {
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               className="relative z-10 overflow-hidden rounded-[40px] sm:rounded-[48px] lg:rounded-[56px] bg-white border border-black/[0.05] shadow-[0_40px_80px_-24px_rgba(0,0,0,0.12)] group-hover:shadow-[0_56px_112px_-32px_rgba(153,27,27,0.14)] transition-shadow duration-700"
             >
-              <div className="md:hidden relative w-full bg-white border-b border-black/[0.06]">
+              <div className="md:hidden director-portrait-zone director-portrait-zone--mobile relative w-full min-h-[min(420px,72vw)] overflow-hidden border-b border-black/[0.06]">
                 <img
                   src={MANAGING_DIRECTOR_IMAGE}
                   alt={`${MANAGING_DIRECTOR}, ${DIRECTOR_ROLE}`}
-                  className="director-portrait w-full h-[min(380px,72vw)] sm:h-[min(440px,65vw)] object-contain object-center mx-auto block"
+                  className="director-portrait"
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-[minmax(200px,40%)_minmax(0,1fr)] md:min-h-[560px] lg:grid-cols-[minmax(220px,42%)_minmax(0,1fr)] lg:min-h-[600px] xl:min-h-[660px]">
-                <div className="hidden md:flex relative min-h-[560px] lg:min-h-[600px] xl:min-h-[660px] border-b md:border-b-0 md:border-r border-black/[0.06] bg-white">
+              <div className="grid grid-cols-1 md:grid-cols-[minmax(280px,46%)_minmax(0,1fr)] md:min-h-[520px] lg:grid-cols-[minmax(300px,48%)_minmax(0,1fr)] lg:min-h-[540px]">
+                <div className="hidden md:flex director-portrait-zone director-portrait-zone--desktop relative h-full min-h-[520px] lg:min-h-[540px] border-b md:border-b-0 md:border-r border-black/[0.06] overflow-hidden">
                   <img
                     src={MANAGING_DIRECTOR_IMAGE}
                     alt={`${MANAGING_DIRECTOR}, ${DIRECTOR_ROLE}`}
-                    className="director-portrait absolute inset-0 h-full w-full object-contain object-center"
-                  />
-                  <div
-                    className="absolute inset-y-0 right-0 w-6 xl:w-8 bg-gradient-to-l from-white/30 to-transparent pointer-events-none"
-                    aria-hidden="true"
+                    className="director-portrait"
                   />
                 </div>
 
