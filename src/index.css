@@ -165,9 +165,7 @@
   }
 
   .director-portrait-zone {
-    background:
-      radial-gradient(ellipse 85% 70% at 50% 20%, rgba(153, 27, 27, 0.12) 0%, transparent 55%),
-      linear-gradient(165deg, #2a2d33 0%, #1c1e24 45%, #12141a 100%);
+    background: transparent;
   }
 
   .director-portrait-zone .director-portrait {
@@ -177,17 +175,14 @@
     width: 100%;
     height: 100%;
     image-rendering: auto;
-  }
-
-  /* Mobile: full-bleed cover (unchanged — looks good) */
-  .director-portrait-zone--mobile .director-portrait {
     object-fit: cover;
-    object-position: center 18%;
   }
 
-  /* Desktop/laptop: show full portrait, face away from text column */
+  .director-portrait-zone--mobile .director-portrait {
+    object-position: center 22%;
+  }
+
   .director-portrait-zone--desktop .director-portrait {
-    object-fit: contain;
-    object-position: left bottom;
+    object-position: center 88%;
   }
 }

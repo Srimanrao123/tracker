@@ -15,7 +15,7 @@ const OfficeLocationMap = () => (
   <MapContainer
     center={HYDERABAD}
     zoom={12}
-    className="office-location-map h-[4.5rem] w-[4.5rem] sm:h-20 sm:w-20 shrink-0 rounded-[20px] overflow-hidden border border-black/[0.06] shadow-sm"
+    className="office-location-map h-[3.75rem] w-[3.75rem] sm:h-[4.25rem] sm:w-[4.25rem] shrink-0 rounded-2xl overflow-hidden border border-black/[0.08] shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08)] ring-2 ring-white"
     zoomControl={false}
     attributionControl={false}
     scrollWheelZoom={false}

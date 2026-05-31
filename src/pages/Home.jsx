@@ -13,8 +13,7 @@ import IntroAnimation from '../components/IntroAnimation';
 import { scrollToSectionId } from '../lib/scrollToSection';
 import { AnimatePresence, motion as Motion, useScroll, useTransform } from 'framer-motion';
 
-// Global flag to track if intro has played once in this browser session
-let introHasPlayed = false;
+// Intro state is now managed via sessionStorage to persist across refreshes
 
 const SIGNAL_PARTICLES = [
   { initialX: '12%', initialY: '18%', x: '14%', y: '16%' },
@@ -85,11 +84,18 @@ const GlobalTrackingBackground = () => {
 
 export default function Home() {
   const location = useLocation();
-  const [showIntro, setShowIntro] = useState(!introHasPlayed);
+  const [showIntro, setShowIntro] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem('introHasPlayed') !== 'true';
+    }
+    return true;
+  });
 
   const handleIntroComplete = () => {
     setShowIntro(false);
-    introHasPlayed = true;
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('introHasPlayed', 'true');
+    }
   };
 
   useLayoutEffect(() => {
